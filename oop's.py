@@ -127,3 +127,73 @@ class name2:
 
 a=name2()
 print(a._name) #this is the method of accessing protected access method
+
+
+
+class books:
+    kitab="science"  #class variable
+
+    def pustak(self):
+        print(f"The name of book is {self.name} and the kitab is {self.kitab} ") #instance variables
+    
+    @classmethod   #this will change the class varaiable  i.e., it will change the first argument as class here self is changed to books.kitab but in instance it would be changed as bidyarthi.kitab
+    def newpustak(self,kitab1):
+        self.kitab=kitab1
+
+
+bidyarthi=books()
+bidyarthi.name="Hero"
+bidyarthi.pustak()
+bidyarthi.newpustak("Management")
+bidyarthi.pustak()
+print(books.kitab)
+
+
+#class method as alternative constructor
+
+class person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+
+    @classmethod
+    def changestr(cls,string):
+        return cls(string.split(" ")[0],int(string.split(" ")[1]))  #this is the alternative class constructor
+
+
+person2=person("hari",19)
+print(person2.name)
+print(person2.age)
+string="Abinash 19"
+person1=person.changestr(string) #now this will convert my whole string value to individual instance variable by seperating the values
+print(person1.name)
+print(person1.age)
+
+
+class person:
+    age=20
+    def __init__(self,name,salary):
+        self.name=name
+        self.salary=salary
+
+    def returnvalue(self):
+        print(f"The name of persons of age {self.age} is {self.name} and the salary of person is {self.salary}")
+
+    @classmethod
+
+    def changes(cls,newage):
+        cls.age=newage
+
+    @classmethod
+    def classconstructor(cls,constructor):
+        _,name,salary=constructor.split(" ")
+        return cls(name,int(salary))
+    
+person1=person.changes(19)
+person1=person("Abinash",200000) 
+person1.returnvalue()
+# person2=person.changes(21)
+constructor="21 Ram 40000"
+person2=person.classconstructor(constructor)
+person2.returnvalue()
+print(help(person))
