@@ -196,4 +196,33 @@ person1.returnvalue()
 constructor="21 Ram 40000"
 person2=person.classconstructor(constructor)
 person2.returnvalue()
-print(help(person))
+# print(help(person))   #this will help to know all the methods,variables used in the class person
+
+
+#super keyword
+
+class parent:
+    def __init__(self,name,id):
+        self.name=name
+        self.id=id
+        print("this is parent class")
+
+    def parent_method(self): #if this self argument is not given then it will raise noargument error
+        print("for the use of super keyword")
+    
+    def parent2_method():
+        print("this should not be printed")
+
+class child(parent): #this is the child classs which will inherit all the methods and all the functions that are used in parent class
+    def child_method(self):
+        print("this is child class")
+        super().parent_method() #this code is only accessable when we include parent class name in the argument of child class 
+    def __init__(self, name, id,age):
+        super().__init__(name, id)
+        self.age=age
+
+childcall=child("Abinash",100,19)
+childcall.child_method()
+print(childcall.name)
+print(childcall.id)
+print(childcall.age)
