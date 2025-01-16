@@ -240,13 +240,20 @@ class vector:
         
     def __add__(self,x):
         return vector(self.i+x.i,self.j+x.j,self.k+x.k) #here python will create a tuple and the values are seperated using comma(,)
-    
+     
+     #self.i=1
+     #x.i=2
+     #self.i+x.i=1+2=3
+     #self.i=3
+     #x.i=4
+     #self.i+x.i=3+4=7
+     #here the operation occurs in (a+b)+c format
 
 a=vector(1,2,3)
 print(a)
 b=vector(2,3,4)
 print(b)
-c=vector(3,4,5)
+c=vector(4,5,6)
 print(c)
 
 print(a+b+c)
@@ -258,15 +265,128 @@ print(a+b+c)
 #1) single inheritance
 
 class Animal:
-    def __init__(self,name,species):
-        self.name=name
+    def __init__(self,species,name):
         self.species=species
+        self.name=name
 
-class snake(Animal):
-    def __init__(self, name, species,sound):
+        
+
+    def __str__(self):
+        return f"The species of animal is {self.species} and the name is {self.name} and the sound produced is {self.sound}"
+    
+class Snake(Animal):
+
+    def __init__(self, species, name,sound):
         self.sound=sound
-        super().__init__(name, species)
+        super().__init__(species, name)  #calling instance variable from class Animal
+        
+
+Python=Snake("Snake","Python","SSSSHHHH")
+print(Python)
+
+#2)Multiple Inheritance
+
+class student:
+    def __init__(self,name):
+        self.name=name
+    def showinfo(self):
+        print(f"my name is {self.name}")
+
+class coder:
+    def __init__(self,language):
+        self.language=language
+    def showinfo(self):
+        print(f"language used is {self.language}")
+
+class student_coder(student,coder):  #there are two parents of this child class
+    def __init__(self, name,language):
+       self.name=name
+       self.language=language
+
+    def  __str__(self):
+        return f"the name is {self.name} and the language used is {self.language}"
 
 
-python=snake("Snake","Python","SSSSSSHHHHH")
-print(python)
+a=student_coder("Abinash","Python")
+print(a)
+a.showinfo() #this showinfo returns the value of the class that is defined at first as argument in child class
+a=student("Abinash")
+a.showinfo()
+a=coder("Python")
+a.showinfo()
+
+
+#3) Multilevel Inheritance
+
+class school:
+    def __init__(self,name,address):
+        self.name=name
+        self.address=address
+
+    def info(self):
+        print (f"name={self.name}\n address={self.address}") #now when the code reaches here it will print this function and again goes to info function of class classroom
+    
+class classroom(school):  #first derived or child class
+    def __init__(self, name, classroom):
+        school.__init__(self,name,address="Bhadrapur") #calling parent constructor
+        self.classroom=classroom
+
+    def info(self):
+        school.info(self) #when the code comes here to display the info ,the functuon is in class school so it will go to class school 
+         #(deriving the parent function)
+        print(f"classroom={self.classroom}") #After the info function of class school is executed it will execute this class classroom info function
+    
+class students(classroom): #second derived or child class
+    def __init__(self, name, students_no):
+        classroom.__init__(self,name, classroom="BSC CSIT sec -A") #calling the first child constructor
+        self.students_no=students_no
+
+    def info(self):
+        classroom.info(self) #a.info() class this classroom.info() but since this function is in class classroom so it will go to class classroom
+        #(deriving the first child function)
+        print(f"students_no={self.students_no}") #finally after all the parent class and first child class is printed this second child class is printed
+    
+a=students("Mechi",36)
+a.info()  
+print(students.mro()) #this will help to know where the code has runned (mro=method resolution order)
+
+#4)Hybrid Inheritance
+class Vehicle:
+    def __init__(self, brand):
+        self.brand = brand
+
+    def info(self):
+        print(f"Brand: {self.brand}")
+
+class Car(Vehicle):
+    def __init__(self, brand, model):
+        Vehicle.__init__(self,brand)
+        self.model = model
+    
+    def car_info(self):
+        Vehicle.info(self)
+        print(f"Model: {self.model}")
+
+class Electric:
+    def __init__(self,battery_capacity):
+        self.battery_capacity = battery_capacity
+    
+    def battery_info(self):
+        print(f"Battery Capacity: {self.battery_capacity} kWh")
+
+class ElectricCar(Car, Electric):
+    def __init__(self, brand, model, battery_capacity, range_km):
+        Car.__init__(self, brand, model)
+        Electric.__init__(self, battery_capacity)
+        self.range_km = range_km
+    
+    def full_info(self):
+        Car.car_info(self)
+        ElectricCar.battery_info(self)
+        print(f"Range: {self.range_km} km")
+
+# Creating an instance
+tesla = ElectricCar("Tesla", "Model 3", 75, 350)
+tesla.full_info()
+        
+        
