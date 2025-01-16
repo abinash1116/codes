@@ -226,3 +226,47 @@ childcall.child_method()
 print(childcall.name)
 print(childcall.id)
 print(childcall.age)
+
+
+#operator overloading
+class vector:
+    def __init__(self,i,j,k):
+        self.i=i
+        self.j=j
+        self.k=k
+
+    def __str__(self):
+        return f"{self.i}i+{self.j}j+{self.k}"
+        
+    def __add__(self,x):
+        return vector(self.i+x.i,self.j+x.j,self.k+x.k) #here python will create a tuple and the values are seperated using comma(,)
+    
+
+a=vector(1,2,3)
+print(a)
+b=vector(2,3,4)
+print(b)
+c=vector(3,4,5)
+print(c)
+
+print(a+b+c)
+
+
+
+#types of inheritance
+
+#1) single inheritance
+
+class Animal:
+    def __init__(self,name,species):
+        self.name=name
+        self.species=species
+
+class snake(Animal):
+    def __init__(self, name, species,sound):
+        self.sound=sound
+        super().__init__(name, species)
+
+
+python=snake("Snake","Python","SSSSSSHHHHH")
+print(python)
